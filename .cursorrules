@@ -1,0 +1,40 @@
+# .cursorrules
+# Project Architecture Rules: FastAPI (backend) + React (frontend) SPA
+
+## General Principles
+- This project is a **Single Page Application** (SPA)
+- UI must be **responsive** (mobile-first, uses Tailwind or CSS Grid/Flex)
+- Code must follow **Clean Architecture**
+- Avoid code duplication (DRY)
+- Clear **separation of concerns**: routing, logic, data, UI
+- Use DTOs to communicate between backend and frontend
+
+## Backend Rules (FastAPI)
+- All route logic must be in `backend/routers/`, with no business logic
+- Business logic goes in `backend/services/`
+- DB access goes in `backend/repositories/` using SQLAlchemy
+- Models:
+  - ORM models in `backend/models/db.py`
+  - Pydantic schemas in `backend/models/schema.py`
+- Global utilities (logging, config, auth) go in `backend/core/` or `backend/utils/`
+- Add unit tests in `backend/tests/` for routers, services, and repositories
+
+## Frontend Rules (React)
+- Use `src/routes/` or `src/pages/` for top-level page components
+- Create reusable UI elements under `src/components/`
+- Organize domain-specific logic under `src/features/`, where each feature contains:
+  - `components/` for internal UI
+  - `hooks/` for local logic
+  - `services/` for API access
+  - `store/` for feature-level state
+- Use `src/api/` for shared API logic (Axios)
+- Put shared utilities in `src/utils/` or `src/lib/`
+- Define types and DTOs in `src/types/`
+- Global styles go in `src/styles/`, assets in `src/assets/`
+- The project must be fully responsive and support SPA navigation
+
+## Summary
+- Structure and roles must enable large-scale maintainability
+- Each layer knows only the layer below it
+- Shared logic is abstracted and reused
+- The design must be scalable, readable, and testable
