@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Card, Container, Row, Col, Alert } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import authApi, { LoginCredentials, RegisterData, ResetPasswordRequest } from '../services/authApi';
+import LanguageSwitcher from './LanguageSwitcher';
 
 enum AuthMode {
   LOGIN = 'login',
@@ -18,7 +20,12 @@ interface ValidationErrors {
   nationalId?: string;
 }
 
-const AuthForm: React.FC = () => {
+interface AuthFormProps {
+  onLoginSuccess?: () => void;
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ onLoginSuccess }) => {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<AuthMode>(AuthMode.LOGIN);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,15 +61,15 @@ const AuthForm: React.FC = () => {
     let isValid = true;
 
     if (!email) {
-      errors.email = 'נא להזין כתובת מייל';
+      errors.email = t('validation.required') as string;
       isValid = false;
     } else if (!validateEmail(email)) {
-      errors.email = 'כתובת המייל אינה תקינה';
+      errors.email = t('validation.emailInvalid') as string;
       isValid = false;
     }
 
     if (!password) {
-      errors.password = 'נא להזין סיסמה';
+      errors.password = t('validation.required') as string;
       isValid = false;
     }
 
@@ -76,44 +83,44 @@ const AuthForm: React.FC = () => {
     let isValid = true;
 
     if (!firstName) {
-      errors.firstName = 'נא להזין שם פרטי';
+      errors.firstName = t('validation.required') as string;
       isValid = false;
     }
 
     if (!lastName) {
-      errors.lastName = 'נא להזין שם משפחה';
+      errors.lastName = t('validation.required') as string;
       isValid = false;
     }
 
     if (!email) {
-      errors.email = 'נא להזין כתובת מייל';
+      errors.email = t('validation.required') as string;
       isValid = false;
     } else if (!validateEmail(email)) {
-      errors.email = 'כתובת המייל אינה תקינה';
+      errors.email = t('validation.emailInvalid') as string;
       isValid = false;
     }
 
     if (!nationalId) {
-      errors.nationalId = 'נא להזין מספר זהות';
+      errors.nationalId = t('validation.required') as string;
       isValid = false;
     } else if (!validateNationalId(nationalId)) {
-      errors.nationalId = 'מספר זהות חייב להכיל 9 ספרות';
+      errors.nationalId = t('validation.idInvalid') as string;
       isValid = false;
     }
 
     if (!password) {
-      errors.password = 'נא להזין סיסמה';
+      errors.password = t('validation.required') as string;
       isValid = false;
     } else if (!validatePassword(password)) {
-      errors.password = 'סיסמה חייבת להכיל לפחות 6 תווים';
+      errors.password = t('validation.passwordLength') as string;
       isValid = false;
     }
 
     if (!confirmPassword) {
-      errors.confirmPassword = 'נא לאמת את הסיסמה';
+      errors.confirmPassword = t('validation.required') as string;
       isValid = false;
     } else if (password !== confirmPassword) {
-      errors.confirmPassword = 'הסיסמאות אינן תואמות';
+      errors.confirmPassword = t('validation.passwordsNotMatch') as string;
       isValid = false;
     }
 
@@ -127,10 +134,10 @@ const AuthForm: React.FC = () => {
     let isValid = true;
 
     if (!email) {
-      errors.email = 'נא להזין כתובת מייל';
+      errors.email = t('validation.required') as string;
       isValid = false;
     } else if (!validateEmail(email)) {
-      errors.email = 'כתובת המייל אינה תקינה';
+      errors.email = t('validation.emailInvalid') as string;
       isValid = false;
     }
 
@@ -152,16 +159,25 @@ const AuthForm: React.FC = () => {
         remember: rememberMe
       };
 
-      await authApi.login(credentials);
-      setSuccess('התחברת בהצלחה!');
-      // Redirect to dashboard or home page after login
-      window.location.href = '/dashboard';
+      const response = await authApi.login(credentials);
+      
+      // Store token in local storage
+      if (response && response.token) {
+        localStorage.setItem('authToken', response.token);
+      }
+      
+      setSuccess(t('success.loginSuccess') as string);
+      
+      // Call onLoginSuccess callback if provided
+      if (onLoginSuccess) {
+        onLoginSuccess();
+      }
     } catch (err: any) {
       console.error("Login error:", err);
       // טיפול נכון בשגיאה - הצגת הודעת שגיאה ברורה
       setError(err.response?.data?.detail || 
                typeof err.message === 'string' ? err.message : 
-               'אירעה שגיאה בהתחברות. אנא נסה שנית.');
+               t('errors.loginFailed') as string);
     } finally {
       setLoading(false);
     }
@@ -185,13 +201,13 @@ const AuthForm: React.FC = () => {
       };
 
       await authApi.register(userData);
-      setSuccess('נרשמת בהצלחה! אנא התחבר כעת.');
+      setSuccess(t('success.registerSuccess') as string);
       setMode(AuthMode.LOGIN);
     } catch (err: any) {
       console.error("Register error:", err);
       
       // טיפול בתשובות שגיאה מהשרת
-      let errorMessage = 'אירעה שגיאה בהרשמה. אנא נסה שנית.';
+      let errorMessage = t('errors.registerFailed') as string;
       
       if (err.response?.data) {
         // אם יש פירוט שגיאה מהשרת
@@ -224,12 +240,12 @@ const AuthForm: React.FC = () => {
     try {
       const request: ResetPasswordRequest = { email };
       await authApi.forgotPassword(request);
-      setSuccess('הוראות לאיפוס הסיסמה נשלחו למייל שלך.');
+      setSuccess(t('success.resetSuccess') as string);
     } catch (err: any) {
       console.error("Forgot password error:", err);
       setError(err.response?.data?.detail || 
                typeof err.message === 'string' ? err.message : 
-               'אירעה שגיאה בשליחת בקשת איפוס סיסמה.');
+               t('errors.resetFailed') as string);
     } finally {
       setLoading(false);
     }
@@ -246,10 +262,10 @@ const AuthForm: React.FC = () => {
   const renderLoginForm = () => (
     <Form onSubmit={handleLogin}>
       <Form.Group className="mb-3" controlId="loginEmail">
-        <Form.Label>כתובת מייל</Form.Label>
+        <Form.Label>{t('auth.email')}</Form.Label>
         <Form.Control
           type="email"
-          placeholder="הזן כתובת מייל"
+          placeholder={t('placeholders.enterEmail') as string}
           value={email}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           isInvalid={!!validationErrors.email}
@@ -261,10 +277,10 @@ const AuthForm: React.FC = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="loginPassword">
-        <Form.Label>סיסמה</Form.Label>
+        <Form.Label>{t('auth.password')}</Form.Label>
         <Form.Control
           type="password"
-          placeholder="הזן סיסמה"
+          placeholder={t('placeholders.enterPassword') as string}
           value={password}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           isInvalid={!!validationErrors.password}
@@ -279,7 +295,7 @@ const AuthForm: React.FC = () => {
         <Form.Check
           type="checkbox"
           id="rememberMe"
-          label="זכור אותי"
+          label={t('auth.rememberMe')}
           checked={rememberMe}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setRememberMe(e.target.checked)}
         />
@@ -288,18 +304,18 @@ const AuthForm: React.FC = () => {
           className="p-0"
           onClick={() => switchMode(AuthMode.FORGOT_PASSWORD)}
         >
-          שכחת סיסמה?
+          {t('auth.forgotPasswordLink')}
         </Button>
       </div>
 
       <Button variant="primary" type="submit" className="w-100" disabled={loading}>
-        {loading ? 'טוען...' : 'התחבר'}
+        {loading ? t('auth.loading') : t('auth.loginButton')}
       </Button>
 
       <div className="text-center mt-3">
-        אין לך חשבון?{' '}
+        {t('auth.noAccount')}{' '}
         <Button variant="link" className="p-0" onClick={() => switchMode(AuthMode.REGISTER)}>
-          הירשם עכשיו
+          {t('auth.registerNow')}
         </Button>
       </div>
     </Form>
@@ -310,10 +326,10 @@ const AuthForm: React.FC = () => {
       <Row>
         <Col md={6}>
           <Form.Group className="mb-3" controlId="registerFirstName">
-            <Form.Label>שם פרטי</Form.Label>
+            <Form.Label>{t('auth.firstName')}</Form.Label>
             <Form.Control
               type="text"
-              placeholder="הזן שם פרטי"
+              placeholder={t('placeholders.enterFirstName') as string}
               value={firstName}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value)}
               isInvalid={!!validationErrors.firstName}
@@ -326,10 +342,10 @@ const AuthForm: React.FC = () => {
         </Col>
         <Col md={6}>
           <Form.Group className="mb-3" controlId="registerLastName">
-            <Form.Label>שם משפחה</Form.Label>
+            <Form.Label>{t('auth.lastName')}</Form.Label>
             <Form.Control
               type="text"
-              placeholder="הזן שם משפחה"
+              placeholder={t('placeholders.enterLastName') as string}
               value={lastName}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}
               isInvalid={!!validationErrors.lastName}
@@ -343,10 +359,10 @@ const AuthForm: React.FC = () => {
       </Row>
 
       <Form.Group className="mb-3" controlId="registerEmail">
-        <Form.Label>כתובת מייל</Form.Label>
+        <Form.Label>{t('auth.email')}</Form.Label>
         <Form.Control
           type="email"
-          placeholder="הזן כתובת מייל"
+          placeholder={t('placeholders.enterEmail') as string}
           value={email}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           isInvalid={!!validationErrors.email}
@@ -358,10 +374,10 @@ const AuthForm: React.FC = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="registerNationalId">
-        <Form.Label>מספר זהות</Form.Label>
+        <Form.Label>{t('auth.nationalId')}</Form.Label>
         <Form.Control
           type="text"
-          placeholder="הזן מספר זהות (9 ספרות)"
+          placeholder={t('placeholders.enterId') as string}
           value={nationalId}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setNationalId(e.target.value)}
           isInvalid={!!validationErrors.nationalId}
@@ -373,10 +389,10 @@ const AuthForm: React.FC = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="registerPassword">
-        <Form.Label>סיסמה</Form.Label>
+        <Form.Label>{t('auth.password')}</Form.Label>
         <Form.Control
           type="password"
-          placeholder="הזן סיסמה (לפחות 6 תווים)"
+          placeholder={t('placeholders.enterPasswordHint') as string}
           value={password}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
           isInvalid={!!validationErrors.password}
@@ -388,10 +404,10 @@ const AuthForm: React.FC = () => {
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="registerConfirmPassword">
-        <Form.Label>אימות סיסמה</Form.Label>
+        <Form.Label>{t('auth.confirmPassword')}</Form.Label>
         <Form.Control
           type="password"
-          placeholder="הזן סיסמה שוב"
+          placeholder={t('placeholders.enterPasswordAgain') as string}
           value={confirmPassword}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
           isInvalid={!!validationErrors.confirmPassword}
@@ -403,13 +419,13 @@ const AuthForm: React.FC = () => {
       </Form.Group>
 
       <Button variant="primary" type="submit" className="w-100" disabled={loading}>
-        {loading ? 'טוען...' : 'הירשם'}
+        {loading ? t('auth.loading') : t('auth.registerButton')}
       </Button>
 
       <div className="text-center mt-3">
-        כבר יש לך חשבון?{' '}
+        {t('auth.hasAccount')}{' '}
         <Button variant="link" className="p-0" onClick={() => switchMode(AuthMode.LOGIN)}>
-          התחבר עכשיו
+          {t('auth.loginNow')}
         </Button>
       </div>
     </Form>
@@ -418,10 +434,10 @@ const AuthForm: React.FC = () => {
   const renderForgotPasswordForm = () => (
     <Form onSubmit={handleForgotPassword}>
       <Form.Group className="mb-3" controlId="forgotEmail">
-        <Form.Label>כתובת מייל</Form.Label>
+        <Form.Label>{t('auth.email')}</Form.Label>
         <Form.Control
           type="email"
-          placeholder="הזן את כתובת המייל שלך"
+          placeholder={t('placeholders.enterEmail') as string}
           value={email}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
           isInvalid={!!validationErrors.email}
@@ -433,12 +449,12 @@ const AuthForm: React.FC = () => {
       </Form.Group>
 
       <Button variant="primary" type="submit" className="w-100" disabled={loading}>
-        {loading ? 'טוען...' : 'שלח הוראות לאיפוס סיסמה'}
+        {loading ? t('auth.loading') : t('auth.resetPasswordButton')}
       </Button>
 
       <div className="text-center mt-3">
         <Button variant="link" className="p-0" onClick={() => switchMode(AuthMode.LOGIN)}>
-          חזרה להתחברות
+          {t('auth.backToLogin')}
         </Button>
       </div>
     </Form>
@@ -448,15 +464,18 @@ const AuthForm: React.FC = () => {
     <Container className="my-5">
       <Row className="justify-content-center">
         <Col xs={12} sm={10} md={8} lg={6} xl={5}>
+          <div className="d-flex justify-content-end mb-3">
+            <LanguageSwitcher />
+          </div>
           <Card className="shadow">
             <Card.Body className="p-4">
               {error && <Alert variant="danger">{error}</Alert>}
               {success && <Alert variant="success">{success}</Alert>}
 
               <h2 className="text-center mb-4">
-                {mode === AuthMode.LOGIN && 'התחברות'}
-                {mode === AuthMode.REGISTER && 'הרשמה'}
-                {mode === AuthMode.FORGOT_PASSWORD && 'שכחתי סיסמה'}
+                {mode === AuthMode.LOGIN && t('auth.login')}
+                {mode === AuthMode.REGISTER && t('auth.register')}
+                {mode === AuthMode.FORGOT_PASSWORD && t('auth.forgotPassword')}
               </h2>
 
               {mode === AuthMode.LOGIN && renderLoginForm()}

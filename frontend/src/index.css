@@ -12,6 +12,93 @@ code {
     monospace;
 }
 
+/* RTL/LTR Support */
+html[dir="rtl"] .form-label,
+html[dir="rtl"] .form-check-label,
+html[dir="rtl"] button,
+html[dir="rtl"] h1, 
+html[dir="rtl"] h2, 
+html[dir="rtl"] h3, 
+html[dir="rtl"] h4, 
+html[dir="rtl"] h5,
+html[dir="rtl"] p,
+html[dir="rtl"] .alert {
+  text-align: right;
+}
+
+html[dir="ltr"] .form-label,
+html[dir="ltr"] .form-check-label,
+html[dir="ltr"] button,
+html[dir="ltr"] h1, 
+html[dir="ltr"] h2, 
+html[dir="ltr"] h3, 
+html[dir="ltr"] h4, 
+html[dir="ltr"] h5,
+html[dir="ltr"] p,
+html[dir="ltr"] .alert {
+  text-align: left;
+}
+
+/* Language Switcher Styles */
+.language-switcher {
+  z-index: 1000;
+}
+
+/* Ensure all form fields align with text direction */
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] .form-control {
+  text-align: right;
+}
+
+html[dir="ltr"] input,
+html[dir="ltr"] textarea,
+html[dir="ltr"] .form-control {
+  text-align: left;
+}
+
+/* Fix for Bootstrap's form control feedback */
+html[dir="rtl"] .form-control-feedback {
+  right: auto;
+  left: 0;
+}
+
+/* Language-specific font styles */
+html[lang="ar"] body {
+  font-family: 'Scheherazade New', 'Arial', sans-serif;
+}
+
+html[lang="he"] body {
+  font-family: 'Rubik', 'Arial', sans-serif;
+}
+
+/* Card Padding for RTL languages */
+html[dir="rtl"] .card {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Override Bootstrap dropdown menu direction */
+html[dir="rtl"] .dropdown-menu {
+  right: 0;
+  left: auto;
+  text-align: right;
+}
+
+html[dir="ltr"] .dropdown-menu {
+  left: 0;
+  right: auto;
+  text-align: left;
+}
+
+/* Override row margins for better RTL support */
+@media (min-width: 576px) {
+  html[dir="rtl"] .row {
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+}
+
 /* RTL Support */
 [dir="rtl"] .form-check {
   padding-right: 1.5em;
@@ -53,4 +140,79 @@ code {
 .btn-link:hover {
   color: #3a56d4;
   text-decoration: underline;
+}
+
+/* Add RTL support for the whole app */
+[dir="rtl"] .me-2 {
+  margin-left: 0.5rem !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] .ms-2 {
+  margin-right: 0.5rem !important;
+  margin-left: 0 !important;
+}
+
+/* Dashboard styles */
+.dashboard-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-container main {
+  flex: 1;
+}
+
+.sidebar {
+  min-height: calc(100vh - 60px);
+  border-right: 1px solid #dee2e6;
+}
+
+[dir="rtl"] .sidebar {
+  border-right: none;
+  border-left: 1px solid #dee2e6;
+}
+
+.sidebar-link {
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.sidebar-link.active {
+  background-color: rgba(0, 123, 255, 0.2);
+  color: #0d6efd;
+  font-weight: 500;
+}
+
+.main-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+/* Custom styles for language switcher */
+.language-switcher .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 100px;
+}
+
+.language-switcher .dropdown-menu {
+  min-width: 100px;
 }

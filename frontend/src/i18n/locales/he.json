@@ -1,0 +1,74 @@
+{
+  "auth": {
+    "login": "התחברות",
+    "register": "הרשמה",
+    "forgotPassword": "שכחתי סיסמה",
+    "email": "כתובת דואר אלקטרוני",
+    "password": "סיסמה",
+    "confirmPassword": "אימות סיסמה",
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "nationalId": "מספר זהות",
+    "rememberMe": "זכור אותי",
+    "forgotPasswordLink": "שכחת סיסמה?",
+    "loginButton": "התחבר",
+    "registerButton": "הירשם",
+    "resetPasswordButton": "שלח הוראות לאיפוס סיסמה",
+    "backToLogin": "חזרה להתחברות",
+    "noAccount": "אין לך חשבון?",
+    "registerNow": "הירשם עכשיו",
+    "hasAccount": "כבר יש לך חשבון?",
+    "loginNow": "התחבר עכשיו",
+    "loading": "טוען..."
+  },
+  "validation": {
+    "required": "שדה חובה",
+    "emailInvalid": "כתובת דואר אלקטרוני לא חוקית",
+    "passwordLength": "הסיסמה חייבת להיות באורך של 6 תווים לפחות",
+    "passwordsNotMatch": "הסיסמאות לא תואמות",
+    "idInvalid": "מספר זהות חייב להכיל 9 ספרות"
+  },
+  "errors": {
+    "loginFailed": "ההתחברות נכשלה. נסה שוב.",
+    "registerFailed": "ההרשמה נכשלה. נסה שוב.",
+    "resetFailed": "שליחת בקשה לאיפוס סיסמה נכשלה."
+  },
+  "success": {
+    "loginSuccess": "ההתחברות הצליחה!",
+    "registerSuccess": "ההרשמה הצליחה! התחבר עכשיו.",
+    "resetSuccess": "הוראות לאיפוס סיסמה נשלחו לדואר האלקטרוני שלך."
+  },
+  "placeholders": {
+    "enterEmail": "הכנס כתובת דואר אלקטרוני",
+    "enterPassword": "הכנס סיסמה",
+    "enterPasswordAgain": "הכנס סיסמה שוב",
+    "enterFirstName": "הכנס שם פרטי",
+    "enterLastName": "הכנס שם משפחה",
+    "enterId": "הכנס מספר זהות (9 ספרות)",
+    "enterPasswordHint": "הכנס סיסמה (לפחות 6 תווים)"
+  },
+  "app": {
+    "title": "מערכת ניהול משתמשים",
+    "footer": "כל הזכויות שמורות"
+  },
+  "dashboard": {
+    "title": "לוח בקרה",
+    "openMenu": "פתח תפריט",
+    "menu": {
+      "title": "ניווט",
+      "profile": "הפרופיל שלי",
+      "citizenInfo": "ניהול מידע אזרח",
+      "logout": "התנתק"
+    },
+    "profile": {
+      "title": "הפרופיל שלי",
+      "description": "צפייה וניהול של המידע האישי שלך והגדרות החשבון."
+    },
+    "citizenInfo": {
+      "title": "ניהול מידע אזרח",
+      "description": "צפייה וניהול המידע שלך כאזרח בצורה מסודרת."
+    }
+  },
+  "languageName": "עברית",
+  "selectLanguage": "בחר שפה"
+} 

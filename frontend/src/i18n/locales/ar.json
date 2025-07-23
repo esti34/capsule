@@ -1,0 +1,74 @@
+{
+  "auth": {
+    "login": "تسجيل الدخول",
+    "register": "تسجيل حساب جديد",
+    "forgotPassword": "نسيت كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "nationalId": "رقم الهوية",
+    "rememberMe": "تذكرني",
+    "forgotPasswordLink": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "registerButton": "تسجيل",
+    "resetPasswordButton": "إرسال تعليمات إعادة تعيين كلمة المرور",
+    "backToLogin": "العودة إلى تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "registerNow": "سجل الآن",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "loginNow": "تسجيل الدخول الآن",
+    "loading": "جار التحميل..."
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "emailInvalid": "البريد الإلكتروني غير صالح",
+    "passwordLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "passwordsNotMatch": "كلمات المرور غير متطابقة",
+    "idInvalid": "رقم الهوية يجب أن يكون 9 أرقام"
+  },
+  "errors": {
+    "loginFailed": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+    "registerFailed": "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+    "resetFailed": "فشل إرسال طلب إعادة تعيين كلمة المرور."
+  },
+  "success": {
+    "loginSuccess": "تم تسجيل الدخول بنجاح!",
+    "registerSuccess": "تم التسجيل بنجاح! يرجى تسجيل الدخول الآن.",
+    "resetSuccess": "تم إرسال تعليمات إعادة تعيين كلمة المرور إلى بريدك الإلكتروني."
+  },
+  "placeholders": {
+    "enterEmail": "أدخل البريد الإلكتروني",
+    "enterPassword": "أدخل كلمة المرور",
+    "enterPasswordAgain": "أدخل كلمة المرور مرة أخرى",
+    "enterFirstName": "أدخل الاسم الأول",
+    "enterLastName": "أدخل اسم العائلة",
+    "enterId": "أدخل رقم الهوية (9 أرقام)",
+    "enterPasswordHint": "أدخل كلمة المرور (6 أحرف على الأقل)"
+  },
+  "app": {
+    "title": "نظام إدارة المستخدمين",
+    "footer": "جميع الحقوق محفوظة"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "openMenu": "فتح القائمة",
+    "menu": {
+      "title": "التنقل",
+      "profile": "الملف الشخصي",
+      "citizenInfo": "إدارة معلومات المواطن",
+      "logout": "تسجيل الخروج"
+    },
+    "profile": {
+      "title": "الملف الشخصي",
+      "description": "عرض وإدارة معلوماتك الشخصية وإعدادات الحساب."
+    },
+    "citizenInfo": {
+      "title": "إدارة معلومات المواطن",
+      "description": "عرض وإدارة معلومات المواطن الخاصة بك بطريقة منظمة."
+    }
+  },
+  "languageName": "العربية",
+  "selectLanguage": "اختر اللغة"
+} 

@@ -1,0 +1,74 @@
+{
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "forgotPassword": "Forgot Password",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "nationalId": "National ID",
+    "rememberMe": "Remember Me",
+    "forgotPasswordLink": "Forgot Password?",
+    "loginButton": "Login",
+    "registerButton": "Register",
+    "resetPasswordButton": "Send Password Reset Instructions",
+    "backToLogin": "Back to Login",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register Now",
+    "hasAccount": "Already have an account?",
+    "loginNow": "Login Now",
+    "loading": "Loading..."
+  },
+  "validation": {
+    "required": "This field is required",
+    "emailInvalid": "Email address is invalid",
+    "passwordLength": "Password must be at least 6 characters",
+    "passwordsNotMatch": "Passwords do not match",
+    "idInvalid": "National ID must be 9 digits"
+  },
+  "errors": {
+    "loginFailed": "Login failed. Please try again.",
+    "registerFailed": "Registration failed. Please try again.",
+    "resetFailed": "Failed to send password reset request."
+  },
+  "success": {
+    "loginSuccess": "Login successful!",
+    "registerSuccess": "Registration successful! Please login now.",
+    "resetSuccess": "Password reset instructions sent to your email."
+  },
+  "placeholders": {
+    "enterEmail": "Enter email address",
+    "enterPassword": "Enter password",
+    "enterPasswordAgain": "Enter password again",
+    "enterFirstName": "Enter first name",
+    "enterLastName": "Enter last name",
+    "enterId": "Enter National ID (9 digits)",
+    "enterPasswordHint": "Enter password (at least 6 characters)"
+  },
+  "app": {
+    "title": "User Management System",
+    "footer": "All Rights Reserved"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "openMenu": "Open Menu",
+    "menu": {
+      "title": "Navigation",
+      "profile": "My Profile",
+      "citizenInfo": "Citizen Information",
+      "logout": "Logout"
+    },
+    "profile": {
+      "title": "My Profile",
+      "description": "View and manage your personal information and account settings."
+    },
+    "citizenInfo": {
+      "title": "Citizen Information Management",
+      "description": "View and manage your citizen information in an organized way."
+    }
+  },
+  "languageName": "English",
+  "selectLanguage": "Select language"
+} 
